@@ -1,0 +1,57 @@
+# Author: Benjamin Reddy
+# Taken from pages 49-50 of O'Neil and Schutt
+
+#require(gdata)
+#require(plyr) #Added by Monnie McGee
+#install the gdata and plyr packages and load in to R.
+library(plyr)
+library(gdata)
+setwd("C:\\Users\\Yao\\Dropbox")
+
+# So, save the file as a csv and use read.csv instead
+qns <- read.csv("rollingsales_queens.csv",skip=4,header=TRUE)
+
+## Check the data
+head(qns)
+summary(qns)
+str(qns) # Very handy function!
+
+## clean/format the data with regular expressions
+## More on these later. For now, know that the
+## pattern "[^[:digit:]]" refers to members of the variable name that
+## start with digits. We use the gsub command to replace them with a blank space.
+# We create a new variable that is a "clean' version of sale.price.
+# And sale.price.n is numeric, not a factor.
+qns$SALE.PRICE.N <- as.numeric(gsub("[^[:digit:]]","", qns$SALE.PRICE))
+count(is.na(qns$SALE.PRICE.N))
+
+names(qns) <- tolower(names(qns)) # make all variable names lower case
+## Get rid of leading digits
+qns$gross.sqft <- as.numeric(gsub("[^[:digit:]]","", qns$gross.square.feet))
+qns$land.sqft <- as.numeric(gsub("[^[:digit:]]","", qns$land.square.feet))
+qns$year.built <- as.numeric(as.character(qns$year.built))
+
+## do a bit of exploration to make sure there's not anything
+## weird going on with sale prices
+attach(qns)
+hist(sale.price.n) 
+detach(qns)
+
+## keep only the actual sales
+
+qns.sale <- qns[qns$sale.price.n!=0,]
+plot(qns.sale$gross.sqft,qns.sale$sale.price.n)
+plot(log10(qns.sale$gross.sqft),log10(qns.sale$sale.price.n))
+
+## for now, let's look at 1-, 2-, and 3-family homes
+qns.homes <- qns.sale[which(grepl("FAMILY",qns.sale$building.class.category)),]
+dim(qns.homes)
+plot(log10(qns.homes$gross.sqft),log10(qns.homes$sale.price.n))
+summary(qns.homes[which(qns.homes$sale.price.n<100000),])
+
+
+## remove outliers that seem like they weren't actual sales
+qns.homes$outliers <- (log10(qns.homes$sale.price.n) <=5) + 0
+qns.homes <- qns.homes[which(qns.homes$outliers==0),]
+plot(log10(qns.homes$gross.sqft),log10(qns.homes$sale.price.n))
+
