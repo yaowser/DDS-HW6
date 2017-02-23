@@ -2,10 +2,7 @@
 title: "Rolling Sales Queens"
 author: "Benjamin Reddy/Yao Steven Jason"
 date: "February 21, 2017"
-output:
-  word_document: default
-  pdf_document:
-    keep_md: yes
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -29,7 +26,7 @@ Check the data attributes.
 ```{r}
 head(qns)
 summary(qns)
-str(qns) # Very handy function!
+str(qns)
 ```
 
 Using libraries gdata and plyr, clean/format the data with regular expressions.
@@ -49,6 +46,7 @@ qns$gross.sqft <- as.numeric(gsub("[^[:digit:]]","", qns$gross.square.feet))
 qns$land.sqft <- as.numeric(gsub("[^[:digit:]]","", qns$land.square.feet))
 qns$year.built <- as.numeric(as.character(qns$year.built))
 ```
+After cleaning the data from character to numeric, we decided to plot a frequency diagram.
 
 We attach the data set qns to the new column sale.price.n to make a histogram on frequency.
 ```{r}
@@ -56,6 +54,8 @@ attach(qns)
 hist(sale.price.n) 
 detach(qns)
 ```
+Looking at the frequency chart, we see a lot of outliers, but the chart came out correctly to show that the majority of the data hovered around the left and is skewed right.
+
 
 Keep only the sales if they are not equal to 0, meaning that they were sold.
 We plot the scatterplot of gross sqft vs sale price and the log(gross sqft) vs log(sale price).
@@ -65,6 +65,7 @@ qns.sale <- qns[qns$sale.price.n!=0,]
 plot(qns.sale$gross.sqft,qns.sale$sale.price.n)
 plot(log10(qns.sale$gross.sqft),log10(qns.sale$sale.price.n))
 ```
+Of the houses not for sale, we eliminated those. After plotting a linear scatterplot, we decided to use a log-log plot to visually see points better whenn sale price was compared to square feet. A supposed qq-plot would also suggest that log transforming the data would give a better distribution.
 
 For now, let's look at 1-, 2-, and 3-family homes.
 A new column homes is formed where we are searching the word 'Family' from building class category to filter the sale price for 1-, 2-, and 3-family homes.
@@ -77,6 +78,8 @@ dim(qns.homes)
 plot(log10(qns.homes$gross.sqft),log10(qns.homes$sale.price.n))
 summary(qns.homes[which(qns.homes$sale.price.n<100000),])
 ```
+Of the houses, we decided to isolate the 1-,2-, and 3-family houses to see the scatterplot distribution prices vs square feet.
+A summary was outputted to figure out the affordibility of these houses under $100,000.
 
 Remove outliers that seem like they weren't actual sales.
 If the log of family homes is less or equal to 5, these are outliers.
@@ -87,3 +90,11 @@ qns.homes$outliers <- (log10(qns.homes$sale.price.n) <=5) + 0
 qns.homes <- qns.homes[which(qns.homes$outliers==0),]
 plot(log10(qns.homes$gross.sqft),log10(qns.homes$sale.price.n))
 ```
+We removed the outliers on the basis that any family house less $100,000 and then we plotted the log-log plot of family prices vs square feet.
+
+As a prospective home buyer in Queens, we first cleaned the data of all the houses for sale. Then, we created a log-log scatter plot of all the family houses for sale. We wanted to see a summary of houses less than 100,000 dollars and we plotted a log-log scatter plot distribution of what the price range hovered above 100,000 dollars.
+
+The distribution density of the plot is about 5.7 in price and 3.25 in gross square feet, ranging from 5.0 to 7.0 in price and from 2.6 and 4.0 in gross square feet.
+
+Taken together, the median price of 1-, 2-, 3-family houses over 100,000 dollars in Queens hover at $501,187 for 1778 square feet, ranging from 100,000 to 100,000,000 in price and from 398 to 10,000 in square feet.
+
