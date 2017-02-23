@@ -13,6 +13,8 @@ setwd("C:\\Users\\Yao\\Documents\\GitHub\\DDS-HW6\\Data")
 # skipping 4 header lines from the original file.
 qns <- read.csv("rollingsales_queens.csv",skip=4,header=TRUE)
 
+#split gather and clean?
+
 #Check the data attributes.
 head(qns)
 summary(qns)
@@ -32,6 +34,8 @@ names(qns) <- tolower(names(qns)) # make all variable names lower case
 qns$gross.sqft <- as.numeric(gsub("[^[:digit:]]","", qns$gross.square.feet))
 qns$land.sqft <- as.numeric(gsub("[^[:digit:]]","", qns$land.square.feet))
 qns$year.built <- as.numeric(as.character(qns$year.built))
+
+#split between clean and analysis?
 
 #We attach the data set qns to the new column sale.price.n to make a histogram on frequency.
 
