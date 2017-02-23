@@ -1,24 +1,27 @@
+# Title: Queens Rolling Sales
 # Author: Benjamin Reddy/Yao Steven Jason
 # Taken from pages 49-50 of O'Neil and Schutt
+# Date: February 21, 2017
+# R version 3.3.2 (2016-10-31) -- "Sincere Pumpkin Patch"
+# Platform: x86_64-w64-mingw32/x64 (64-bit)
 
-#require(gdata)
-#require(plyr) #Added by Monnie McGee
-#install the gdata and plyr packages and load in to R.
-#Working directory is locally linked and pushed to GitHub.
-library(plyr)
-library(gdata)
-setwd("C:\\Users\\Yao\\Documents\\GitHub\\DDS-HW6\\Data")
+#Working directory is linked on GitHub.
+setwd(".\\Data")
 
 # Saved the file as a csv to use read.csv to import the rolling sales for Queens, 
 # skipping 4 header lines from the original file.
 qns <- read.csv("rollingsales_queens.csv",skip=4,header=TRUE)
 
-#split gather and clean?
-
 #Check the data attributes.
 head(qns)
 summary(qns)
-str(qns) # Very handy function!
+str(qns)
+
+#require(gdata)
+#require(plyr) #Added by Monnie McGee
+#install the gdata and plyr packages and load in to R.
+library(plyr)
+library(gdata)
 
 #Using libraries gdata and plyr, clean/format the data with regular expressions.
 #Using "[^[:digit:]]", we are only keeping and converting the numericals for new column names sale.price, gross.sqft, and land.sqft.
@@ -34,8 +37,6 @@ names(qns) <- tolower(names(qns)) # make all variable names lower case
 qns$gross.sqft <- as.numeric(gsub("[^[:digit:]]","", qns$gross.square.feet))
 qns$land.sqft <- as.numeric(gsub("[^[:digit:]]","", qns$land.square.feet))
 qns$year.built <- as.numeric(as.character(qns$year.built))
-
-#split between clean and analysis?
 
 #We attach the data set qns to the new column sale.price.n to make a histogram on frequency.
 
@@ -61,7 +62,6 @@ dim(qns.homes)
 plot(log10(qns.homes$gross.sqft),log10(qns.homes$sale.price.n))
 summary(qns.homes[which(qns.homes$sale.price.n<100000),])
 
-
 #Remove outliers that seem like they weren't actual sales.
 #If the log of family homes is less or equal to 5, these are outliers.
 #Only the family homes where it is not outliers are kept.
@@ -69,4 +69,3 @@ summary(qns.homes[which(qns.homes$sale.price.n<100000),])
 qns.homes$outliers <- (log10(qns.homes$sale.price.n) <=5) + 0
 qns.homes <- qns.homes[which(qns.homes$outliers==0),]
 plot(log10(qns.homes$gross.sqft),log10(qns.homes$sale.price.n))
-
