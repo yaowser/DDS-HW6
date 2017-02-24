@@ -3,6 +3,10 @@ This depository is Homework 6 for Doing Data Science 6306 Section 401 Tuesdays a
 
 There are 4 directories in this depository: Data, Analysis, Paper, and Other
 
+# Reason for analysis
+
+The log-log scatter plot of 1-, 2-, and 3-family homes in Queens for more than $100,000 was analyzed to show a density distribution of price vs total square feet. More could be found in the .pdf located in the paper directory.
+
 # Data directory:
 
 We have the original data set from http://www1.nyc.gov/site/finance/taxes/property-rolling-sales-data.page, where data was retrieved for last 12 months of rolling sales for Queens. "rollingsales_queens.xls" was then converted into "rollingsales_queens.csv" and both are attached.
@@ -28,10 +32,6 @@ Queens Rolling Sales Makefile.txt is the full composition of the R code from beg
 "plyr_1.8.4.tar.gz" is the plyr library version used for the R code.
 
 "gdata_2.17.0.tar.gz" is the plyr library version used for the R code.
-
-# Reason for analysis
-
-The log-log scatter plot of 1-, 2-, and 3-family homes in Queens for more than $100,000 was analyzed to show a density distribution of price vs total square feet.
 
 # Other Directory:
 
