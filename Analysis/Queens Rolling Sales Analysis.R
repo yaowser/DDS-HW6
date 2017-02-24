@@ -38,3 +38,6 @@ qns.homes$outliers <- (log10(qns.homes$sale.price.n) <=5) + 0
 qns.homes <- qns.homes[which(qns.homes$outliers==0),]
 plot(log10(qns.homes$gross.sqft),log10(qns.homes$sale.price.n))
 
+write.csv(qns, "qns.csv")
+write.csv(qns.sale, "qns.sale.csv")
+write.csv(qns.homes, "qns.homes.csv")
