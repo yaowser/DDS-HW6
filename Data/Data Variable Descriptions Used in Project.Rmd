@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 #Working directory is linked on GitHub.
+setwd(".\\Data")
 
 # Saved the file as a csv to use read.csv to import the rolling sales for Queens, 
 # skipping 4 header lines from the original file.
