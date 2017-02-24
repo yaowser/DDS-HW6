@@ -19,9 +19,13 @@ qns <- read.csv("rollingsales_queens.csv",skip=4,header=TRUE)
 ```
 
 BUILDING CLASS CATEGORY - The type of building it is, used to filter family homes
+
 GROSS SQUARE FEET - The total square feet of a building
+
 YEAR BUILT - The year the building was built
+
 SALE PRICE - The price of the building, used to filter buildings not for sale vs for sale
+
 LAND SQUARE FEET - The land square feet of where the building resides
 
 ```{r}
