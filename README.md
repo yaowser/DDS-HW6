@@ -17,7 +17,13 @@ There are variable descriptions for all the data manipulated for this project in
 
 "Queens Rolling Sales Clean.R" cleaned the data and is run after the gathering process
 
-Queens Rolling Sales Makefile.txt is the full composition of the R code from beginning to end, which combined the gather, clean, and analysis procedures.
+"Queens Rolling Sales Makefile.txt" is the full composition of the R code from beginning to end, which combined the gather, clean, and analysis procedures.
+
+"qns.csv" is the raw gathered file from reading the original "rollingsales_queens.csv" file, generated from "Queens Rolling Sales Gather.R"
+
+"qns.sale.csv" is the cleaned data that distinguishes the buildings for sale from "qns.csv", generated from "Queens Rolling Sales Clean.R"
+
+"qns.homes.csv" is the cleaned data that distinguishes the 1-, 2-, and 3-family homes from "qns.sale.csv" to perform the analysis, generated from "Queens Rolling Sales Analysis.R"
 
 # Analysis directory:
 
